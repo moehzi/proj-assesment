@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import { Container } from '@chakra-ui/react';
 import './App.css';
-import { Button } from '@chakra-ui/react';
+import Navbar from './components/Navbar';
+import Header from './components/Header';
+import TableData from './components/TableData';
+
+const dataSource = [
+  {
+    name: 'Faizi',
+    eKTP: '12309542342',
+    address: 'Jl. Permata Ringgi',
+    dateOfBirth: '19 Maret 2000',
+    phoneNumber: '081234567890',
+    family: [
+      {
+        name: 'Bambang Pamungkas',
+        dateOfBirth: '20 Maret 2000',
+        relationshipStatus: 'parent',
+      },
+      {
+        name: 'Angelina Jolie',
+        dateOfBirth: '21 Maret 2000',
+        relationshipStatus: 'parent',
+      },
+    ],
+  },
+];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button colorScheme={'telegram'}>Mantap</Button>
-      </header>
+      <Navbar />
+      <Container maxW="1440px" padding="8">
+        <Header text="List User" />
+        <TableData dataSource={dataSource} />
+      </Container>
     </div>
   );
 }
