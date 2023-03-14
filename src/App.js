@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button } from '@chakra-ui/react';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+        <Button colorScheme={'telegram'}>Mantap</Button>
       </header>
     </div>
   );
