@@ -1,5 +1,7 @@
-import React from 'react';
+import { ListItem, OrderedList, Text } from '@chakra-ui/react';
+import React, { Fragment } from 'react';
 import Header from '../../components/Header';
+import PopupDetails from '../../components/PopupDetails';
 import TableData from '../../components/TableData';
 
 const dataSource = [
@@ -25,11 +27,40 @@ const dataSource = [
   },
 ];
 
+const columns = [
+  { label: 'Name', render: (data) => data.name },
+  { label: 'eKTP', render: (data) => data.eKTP },
+  { label: 'Address', render: (data) => data.address },
+  { label: 'Job', render: (data) => data.job },
+  { label: 'Date of Birth', render: (data) => data.dateOfBirth },
+  { label: 'Phone Number', render: (data) => data.phoneNumber },
+  {
+    label: 'Family',
+    render: (data) => (
+      <PopupDetails
+        triggerText={`Show (${data.family.length})`}
+        popupHeader="Family Details"
+        popupBody={
+          <OrderedList>
+            {data.family.map((value, index) => (
+              <Fragment key={index}>
+                <ListItem>Name: {value.name}</ListItem>
+                <Text>Date of Birth: {value.dateOfBirth}</Text>
+                <Text>Relationship Status: {value.relationshipStatus}</Text>
+              </Fragment>
+            ))}
+          </OrderedList>
+        }
+      />
+    ),
+  },
+];
+
 const Home = () => {
   return (
     <>
-      <Header text="List User" />
-      <TableData dataSource={dataSource} />
+      <Header isHaveButton text="List User" />
+      <TableData dataSource={dataSource} columns={columns} />
     </>
   );
 };
