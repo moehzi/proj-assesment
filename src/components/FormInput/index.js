@@ -17,7 +17,6 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import 'react-datepicker/dist/react-datepicker.css';
 import ButtonComponent from '../Button';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/userSlice';
@@ -156,7 +155,7 @@ const FormInput = () => {
           <ButtonComponent
             text="Add Family Member"
             colorScheme="red"
-            maxW="250px"
+            maxW="200px"
             onClick={() =>
               appendFamily({
                 name: '',
@@ -196,7 +195,7 @@ const FormInput = () => {
           <ButtonComponent
             text="Add Phone"
             colorScheme="red"
-            maxW="250px"
+            maxW="150px"
             onClick={() => appendPhoneNumber({ phoneNumber: '' })}
           />
         </div>

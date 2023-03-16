@@ -3,16 +3,21 @@ import './App.css';
 import Navbar from './components/Navbar';
 import CreateUser from './pages/CreateUser';
 import Home from './pages/Home';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Container maxW="1440px" padding="8">
-        <Home />
-        <CreateUser />
-      </Container>
-    </div>
+    <>
+      <Router>
+        <Navbar />
+        <Container maxW="1440px" padding="8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/create-user" element={<CreateUser />} />
+          </Routes>
+        </Container>
+      </Router>
+    </>
   );
 }
 
