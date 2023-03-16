@@ -1,9 +1,9 @@
-import { Heading, Input, Select } from '@chakra-ui/react';
+import { FormErrorMessage, Heading, Input, Select } from '@chakra-ui/react';
 import React from 'react';
 import { optionsRelationship } from '../../../config/options/RelationshipOptions';
 import TableData from '../../TableData';
 
-const FormInputFamily = ({ familyFields, register, dataSource }) => {
+const FormInputFamily = ({ familyFields, register, dataSource, errors }) => {
   const columns = [
     {
       label: 'Name',
@@ -21,45 +21,52 @@ const FormInputFamily = ({ familyFields, register, dataSource }) => {
               },
             })}
           />
+          <FormErrorMessage>
+            {errors.family && errors.family[index].name?.message}
+          </FormErrorMessage>
         </>
       ),
     },
     {
       label: 'Date of Birth',
       render: (data, index) => (
-        <Input
-          placeholder="Select Date and Time"
-          size="sm"
-          type="date"
-          {...register(`family.${index}.dateOfBirth`, {
-            required: 'This is required',
-            minLength: {
-              value: 14,
-              message: 'Minimum length should be 14',
-            },
-          })}
-        />
+        <>
+          <Input
+            placeholder="Select Date and Time"
+            size="sm"
+            type="date"
+            id="dateOfBirth"
+            {...register(`family.${index}.dateOfBirth`, {
+              required: 'This is required',
+            })}
+          />
+          <FormErrorMessage>
+            {errors.family && errors.family[index].dateOfBirth?.message}
+          </FormErrorMessage>
+        </>
       ),
     },
     {
       label: 'Relationship Status',
       render: (data, index) => (
-        <Select
-          colorScheme="red"
-          size="sm"
-          {...register(`family.${index}.relationshipStatus`, {
-            required: 'This is required',
-            minLength: {
-              value: 4,
-              message: 'Minimum length should be 4',
-            },
-          })}
-          placeholder="Enter your relationship"
-        >
-          {optionsRelationship.map((option, index) => (
-            <option key={index}>{option.label}</option>
-          ))}
-        </Select>
+        <>
+          <Select
+            colorScheme="red"
+            size="sm"
+            id="relationshipStatus"
+            {...register(`family.${index}.relationshipStatus`, {
+              required: 'This is required',
+            })}
+            placeholder="Enter your relationship"
+          >
+            {optionsRelationship.map((option, index) => (
+              <option key={index}>{option.label}</option>
+            ))}
+          </Select>
+          <FormErrorMessage>
+            {errors.family && errors.family[index].relationshipStatus?.message}
+          </FormErrorMessage>
+        </>
       ),
     },
   ];

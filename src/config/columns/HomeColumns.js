@@ -10,7 +10,7 @@ export const homeColumns = [
   { label: 'Job', render: (data) => data.job },
   {
     label: 'Date of Birth',
-    render: (data) => moment(data.dateOfBirth).format('DD MMMM YYYY'),
+    render: (data) => moment().format('DD MMMM YYYY'),
   },
   {
     label: 'Phone Number',

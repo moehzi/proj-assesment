@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   FormLabel,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Button,
   InputGroup,
   InputLeftAddon,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import ButtonComponent from '../Button';
@@ -57,8 +58,8 @@ const FormInput = () => {
             label="Name"
             register={register('name', {
               required: 'This is required',
-              minLength: { value: 4, message: 'Minimum length should be 4' },
             })}
+            errors={errors.name}
           />
           <TextareaBox
             id="address"
@@ -68,6 +69,7 @@ const FormInput = () => {
               required: 'This is required',
               minLength: { value: 10, message: 'Minimum length should be 10' },
             })}
+            errors={errors.address}
           />
           <InputBox
             id="eKTP"
@@ -77,11 +79,14 @@ const FormInput = () => {
               required: 'This is required',
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
+            type="number"
+            errors={errors.eKTP}
           />
           <FormInputFamily
             familyFields={familyFields}
             dataSource={fieldsFamily}
             register={register}
+            errors={errors}
           />
           <ButtonComponent
             text="Add Family Member"
@@ -104,6 +109,7 @@ const FormInput = () => {
             register={register('job', {
               required: 'This is required',
             })}
+            errors={errors.job}
           />
           <InputBox
             placeholder="Select Date and Time"
@@ -111,24 +117,35 @@ const FormInput = () => {
             label="Date Of Birth"
             register={register('dateOfBirth', {
               required: 'This is required',
-              minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
             size="md"
             type="date"
+            errors={errors.dateOfBirth}
           />
+          {console.log(errors)}
           <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
           {fieldsPhoneNumber.map((field, index) => (
-            <InputGroup key={field.id}>
-              <InputLeftAddon children="+62" />
-              <Input
-                id="phoneNumber"
-                type="tel"
-                placeholder="enter your phone number..."
-                {...register(`phoneNumbers.${index}.phoneNumber`, {
-                  required: 'This is required',
-                })}
-              />
-            </InputGroup>
+            <Fragment key={field.id}>
+              <InputGroup>
+                <InputLeftAddon children="+62" />
+                <Input
+                  id="phoneNumber"
+                  type="number"
+                  placeholder="Enter your phone number"
+                  {...register(`phoneNumbers.${index}.phoneNumber`, {
+                    required: 'This is required',
+                    setValueAs: (v) => `0${v}`,
+                    minLength: { value: 9, message: 'Minimal length is 9' },
+                  })}
+                />
+              </InputGroup>
+              {errors.phoneNumbers && errors.phoneNumbers.length > 1 && (
+                <FormErrorMessage>
+                  {errors.phoneNumbers[index] &&
+                    errors.phoneNumbers[index].phoneNumber.message}
+                </FormErrorMessage>
+              )}
+            </Fragment>
           ))}
           <ButtonComponent
             text="Add Phone"

@@ -31,6 +31,7 @@ const usersSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       state.items.push(action.payload);
+      console.log(state, action);
     },
   },
 });
