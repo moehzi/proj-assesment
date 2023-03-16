@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   FormLabel,
   FormControl,
@@ -7,6 +7,7 @@ import {
   InputGroup,
   InputLeftAddon,
   FormErrorMessage,
+  Text,
 } from '@chakra-ui/react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import ButtonComponent from '../Button';
@@ -115,6 +116,7 @@ const FormInput = () => {
             placeholder="Select Date and Time"
             id="dateOfBirth"
             label="Date Of Birth"
+            data-testid="date-of-birth"
             register={register('dateOfBirth', {
               required: 'This is required',
             })}
@@ -122,7 +124,6 @@ const FormInput = () => {
             type="date"
             errors={errors.dateOfBirth}
           />
-          {console.log(errors)}
           <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
           {fieldsPhoneNumber.map((field, index) => (
             <Fragment key={field.id}>
@@ -135,6 +136,7 @@ const FormInput = () => {
                   {...register(`phoneNumbers.${index}.phoneNumber`, {
                     required: 'This is required',
                     setValueAs: (v) => `0${v}`,
+
                     minLength: { value: 9, message: 'Minimal length is 9' },
                   })}
                 />

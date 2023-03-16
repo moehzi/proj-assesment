@@ -11,7 +11,8 @@ const FormInputFamily = ({ familyFields, register, dataSource, errors }) => {
         <>
           <Input
             size="sm"
-            id="name"
+            id={`family-name-${index}`}
+            data-testid={`family-name-${index}`}
             placeholder="Enter your name"
             {...register(`family.${index}.name`, {
               required: 'This is required',
@@ -35,7 +36,8 @@ const FormInputFamily = ({ familyFields, register, dataSource, errors }) => {
             placeholder="Select Date and Time"
             size="sm"
             type="date"
-            id="dateOfBirth"
+            id={`family-dateOfBirth-${index}`}
+            data-testid={`family-dateOfBirth-${index}`}
             {...register(`family.${index}.dateOfBirth`, {
               required: 'This is required',
             })}
@@ -53,14 +55,17 @@ const FormInputFamily = ({ familyFields, register, dataSource, errors }) => {
           <Select
             colorScheme="red"
             size="sm"
-            id="relationshipStatus"
+            id={`family-relationshipStatus-${index}`}
+            data-testid={`family-relationshipStatus-${index}`}
             {...register(`family.${index}.relationshipStatus`, {
               required: 'This is required',
             })}
             placeholder="Enter your relationship"
           >
             {optionsRelationship.map((option, index) => (
-              <option key={index}>{option.label}</option>
+              <option key={index} data-testid={`option-${index}`}>
+                {option.label}
+              </option>
             ))}
           </Select>
           <FormErrorMessage>

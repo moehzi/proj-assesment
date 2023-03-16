@@ -1,4 +1,4 @@
-import { Flex, ListItem, OrderedList, Text } from '@chakra-ui/react';
+import { Flex, OrderedList } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
 import ListItemDetails from '../ListItemDetails';
 

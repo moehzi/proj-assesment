@@ -3,5 +3,5 @@ export const optionsRelationship = [
   { label: 'Sister', value: 'sister' },
   { label: 'Parent', value: 'parent' },
   { label: 'Child', value: 'child' },
-  { labe: 'Spouse', value: 'spouse' },
+  { label: 'Spouse', value: 'spouse' },
 ];
