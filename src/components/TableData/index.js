@@ -24,11 +24,13 @@ const TableData = ({ dataSource, columns }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {dataSource.map((data, index) => {
+            {dataSource.map((data, indexSource) => {
               return (
-                <Tr key={index}>
+                <Tr key={indexSource}>
                   {columns.map((column, index) => {
-                    return <Td key={index}>{column.render(data)}</Td>;
+                    return (
+                      <Td key={index}>{column.render(data, indexSource)}</Td>
+                    );
                   })}
                 </Tr>
               );

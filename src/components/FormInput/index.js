@@ -4,22 +4,17 @@ import {
   FormControl,
   Input,
   Button,
-  Textarea,
   InputGroup,
   InputLeftAddon,
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Heading,
 } from '@chakra-ui/react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import ButtonComponent from '../Button';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../features/userSlice';
+import { addUser } from '../../reducers/userSlice';
+import { useNavigate } from 'react-router-dom';
+import InputBox from '../InputBox';
+import TextareaBox from '../TextareaBox';
+import FormInputFamily from './FormInputFamily';
 
 const FormInput = () => {
   const {
@@ -43,115 +38,59 @@ const FormInput = () => {
   });
 
   const onSubmit = (values) => {
-    console.log(values, 'ini value');
     dispatch(addUser(values));
+    navigate('/');
   };
 
   const familyFields = watch('family');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <FormControl isInvalid={errors.name} className="flex gap-4">
         <div className="flex flex-col flex-1 max-w-2xl gap-2">
-          <FormLabel htmlFor="name">Name</FormLabel>
-          <Input
+          <InputBox
             id="name"
-            placeholder="Enter your name..."
-            {...register('name', {
+            placeholder="Enter your name"
+            label="Name"
+            register={register('name', {
               required: 'This is required',
               minLength: { value: 4, message: 'Minimum length should be 4' },
             })}
           />
-          <FormLabel htmlFor="name">Address</FormLabel>
-          <Textarea
+          <TextareaBox
             id="address"
-            placeholder="Enter your address..."
-            {...register('address', {
+            placeholder="Enter your address"
+            label="Address"
+            register={register('address', {
               required: 'This is required',
               minLength: { value: 10, message: 'Minimum length should be 10' },
             })}
           />
-          <FormLabel htmlFor="eKTP">eKTP</FormLabel>
-          <Input
+          <InputBox
             id="eKTP"
+            label="eKTP"
             placeholder="Enter your eKTP..."
-            {...register('eKTP', {
+            register={register('eKTP', {
               required: 'This is required',
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
           />
-          <FormLabel htmlFor="name">Job</FormLabel>
-          <Input
+          <InputBox
             id="job"
+            label="Job"
             placeholder="enter your job"
-            {...register('job', {
+            register={register('job', {
               required: 'This is required',
             })}
           />
-          <Heading as="h4" size="sm" className="mt-4">
-            {`Family Member (${familyFields.length})`}
-          </Heading>
-          <TableContainer>
-            <Table size="sm" variant="simple" colorScheme="red">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Date of Birth</Th>
-                  <Th>Relationship Status</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {fieldsFamily.map((field, index) => (
-                  <Tr key={field.id}>
-                    <Td>
-                      <Input
-                        size="sm"
-                        id="name"
-                        placeholder="Enter your name"
-                        {...register(`family.${index}.name`, {
-                          required: 'This is required',
-                          minLength: {
-                            value: 4,
-                            message: 'Minimum length should be 4',
-                          },
-                        })}
-                      />
-                    </Td>
-                    <Td>
-                      <Input
-                        placeholder="Select Date and Time"
-                        size="sm"
-                        type="datetime-local"
-                        {...register(`family.${index}.dateOfBirth`, {
-                          required: 'This is required',
-                          minLength: {
-                            value: 14,
-                            message: 'Minimum length should be 14',
-                          },
-                        })}
-                      />
-                    </Td>
-                    <Td>
-                      <Input
-                        id="relationshipStatus"
-                        size="sm"
-                        placeholder="Enter your relationship status..."
-                        {...register(`family.${index}.relationshipStatus`, {
-                          required: 'This is required',
-                          minLength: {
-                            value: 4,
-                            message: 'Minimum length should be 4',
-                          },
-                        })}
-                      />
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+          <FormInputFamily
+            familyFields={familyFields}
+            dataSource={fieldsFamily}
+            register={register}
+          />
           <ButtonComponent
             text="Add Family Member"
             colorScheme="red"
@@ -166,18 +105,17 @@ const FormInput = () => {
           />
         </div>
         <div className="flex flex-col flex-1 max-w-xl gap-2">
-          <FormLabel htmlFor="dateOfBirth">Date of Birth</FormLabel>
-          {/* <InputGroup> */}
-          <Input
+          <InputBox
             placeholder="Select Date and Time"
-            size="md"
-            type="datetime-local"
-            {...register('dateOfBirth', {
+            id="dateOfBirth"
+            label="Date Of Birth"
+            register={register('dateOfBirth', {
               required: 'This is required',
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
+            size="md"
+            type="datetime-local"
           />
-          {/* </InputGroup> */}
           <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
           {fieldsPhoneNumber.map((field, index) => (
             <InputGroup key={field.id}>
