@@ -1,31 +1,9 @@
-import { ListItem, OrderedList, Text } from '@chakra-ui/react';
+import { ListItem, OrderedList, Text, UnorderedList } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import PopupDetails from '../../components/PopupDetails';
 import TableData from '../../components/TableData';
-
-const dataSource = [
-  {
-    name: 'Faizi',
-    eKTP: '12309542342',
-    address: 'Jl. Permata Ringgi',
-    dateOfBirth: '19 Maret 2000',
-    phoneNumber: '081234567890',
-    job: 'Student',
-    family: [
-      {
-        name: 'Bambang Pamungkas',
-        dateOfBirth: '20 Maret 2000',
-        relationshipStatus: 'parent',
-      },
-      {
-        name: 'Angelina Jolie',
-        dateOfBirth: '21 Maret 2000',
-        relationshipStatus: 'parent',
-      },
-    ],
-  },
-];
 
 const columns = [
   { label: 'Name', render: (data) => data.name },
@@ -33,7 +11,22 @@ const columns = [
   { label: 'Address', render: (data) => data.address },
   { label: 'Job', render: (data) => data.job },
   { label: 'Date of Birth', render: (data) => data.dateOfBirth },
-  { label: 'Phone Number', render: (data) => data.phoneNumber },
+  {
+    label: 'Phone Number',
+    render: (data) => (
+      <>
+        {data.phoneNumbers.length > 1 ? (
+          <UnorderedList>
+            {data.phoneNumbers.map((value) => (
+              <ListItem>{value.phoneNumber}</ListItem>
+            ))}
+          </UnorderedList>
+        ) : (
+          data.phoneNumbers[0].phoneNumber
+        )}
+      </>
+    ),
+  },
   {
     label: 'Family',
     render: (data) => (
@@ -57,10 +50,11 @@ const columns = [
 ];
 
 const Home = () => {
+  const users = useSelector((state) => state.users.items);
   return (
     <>
       <Header isHaveButton text="List User" />
-      <TableData dataSource={dataSource} columns={columns} />
+      <TableData dataSource={users} columns={columns} />
     </>
   );
 };

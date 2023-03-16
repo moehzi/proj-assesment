@@ -14,16 +14,20 @@ import {
   Th,
   Tbody,
   Td,
+  Heading,
 } from '@chakra-ui/react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
 import ButtonComponent from '../Button';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/userSlice';
 
 const FormInput = () => {
   const {
     handleSubmit,
     register,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -41,12 +45,17 @@ const FormInput = () => {
 
   const onSubmit = (values) => {
     console.log(values, 'ini value');
+    dispatch(addUser(values));
   };
+
+  const familyFields = watch('family');
+
+  const dispatch = useDispatch();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <FormControl isInvalid={errors.name} className="flex gap-4">
-        <div className="flex gap-2 flex-col">
+        <div className="flex flex-col flex-1 max-w-2xl gap-2">
           <FormLabel htmlFor="name">Name</FormLabel>
           <Input
             id="name"
@@ -65,11 +74,11 @@ const FormInput = () => {
               minLength: { value: 10, message: 'Minimum length should be 10' },
             })}
           />
-          <FormLabel htmlFor="name">eKTP</FormLabel>
+          <FormLabel htmlFor="eKTP">eKTP</FormLabel>
           <Input
-            id="ektp"
+            id="eKTP"
             placeholder="Enter your eKTP..."
-            {...register('ektp', {
+            {...register('eKTP', {
               required: 'This is required',
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
@@ -82,8 +91,11 @@ const FormInput = () => {
               required: 'This is required',
             })}
           />
+          <Heading as="h4" size="sm" className="mt-4">
+            {`Family Member (${familyFields.length})`}
+          </Heading>
           <TableContainer>
-            <Table variant="simple">
+            <Table size="sm" variant="simple" colorScheme="red">
               <Thead>
                 <Tr>
                   <Th>Name</Th>
@@ -96,8 +108,9 @@ const FormInput = () => {
                   <Tr key={field.id}>
                     <Td>
                       <Input
+                        size="sm"
                         id="name"
-                        placeholder="Enter your name..."
+                        placeholder="Enter your name"
                         {...register(`family.${index}.name`, {
                           required: 'This is required',
                           minLength: {
@@ -110,7 +123,7 @@ const FormInput = () => {
                     <Td>
                       <Input
                         placeholder="Select Date and Time"
-                        size="md"
+                        size="sm"
                         type="datetime-local"
                         {...register(`family.${index}.dateOfBirth`, {
                           required: 'This is required',
@@ -124,6 +137,7 @@ const FormInput = () => {
                     <Td>
                       <Input
                         id="relationshipStatus"
+                        size="sm"
                         placeholder="Enter your relationship status..."
                         {...register(`family.${index}.relationshipStatus`, {
                           required: 'This is required',
@@ -140,12 +154,19 @@ const FormInput = () => {
             </Table>
           </TableContainer>
           <ButtonComponent
-            text="Add Phone"
+            text="Add Family Member"
             colorScheme="red"
-            onClick={() => appendFamily({ name: '', relationshipStatus: '' })}
+            maxW="250px"
+            onClick={() =>
+              appendFamily({
+                name: '',
+                dateOfBirth: '',
+                relationshipStatus: '',
+              })
+            }
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col flex-1 max-w-xl gap-2">
           <FormLabel htmlFor="dateOfBirth">Date of Birth</FormLabel>
           {/* <InputGroup> */}
           <Input
@@ -175,11 +196,12 @@ const FormInput = () => {
           <ButtonComponent
             text="Add Phone"
             colorScheme="red"
+            maxW="250px"
             onClick={() => appendPhoneNumber({ phoneNumber: '' })}
           />
         </div>
       </FormControl>
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+      <Button mt={4} colorScheme="red" isLoading={isSubmitting} type="submit">
         Submit
       </Button>
     </form>
