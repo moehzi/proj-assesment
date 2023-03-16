@@ -1,7 +1,8 @@
-import { ListItem, OrderedList, Text, UnorderedList } from '@chakra-ui/react';
+import { ListItem, UnorderedList } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import PopupDetails from '../../components/PopupDetails';
 import moment from 'moment';
+import PopupBody from '../../components/PopupBody';
 
 export const homeColumns = [
   { label: 'Name', render: (data) => data.name },
@@ -10,7 +11,7 @@ export const homeColumns = [
   { label: 'Job', render: (data) => data.job },
   {
     label: 'Date of Birth',
-    render: (data) => moment().format('DD MMMM YYYY'),
+    render: (data) => moment(new Date(data.dateOfBirth)).format('DD MMMM YYYY'),
   },
   {
     label: 'Phone Number',
@@ -34,17 +35,7 @@ export const homeColumns = [
       <PopupDetails
         triggerText={`Show (${data.family.length})`}
         popupHeader="Family Details"
-        popupBody={
-          <OrderedList>
-            {data.family.map((value, index) => (
-              <Fragment key={index}>
-                <ListItem>Name: {value.name}</ListItem>
-                <Text>Date of Birth: {value.dateOfBirth}</Text>
-                <Text>Relationship Status: {value.relationshipStatus}</Text>
-              </Fragment>
-            ))}
-          </OrderedList>
-        }
+        popupBody={<PopupBody data={data} />}
       />
     ),
   },
