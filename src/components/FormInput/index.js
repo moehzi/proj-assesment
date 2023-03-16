@@ -78,14 +78,6 @@ const FormInput = () => {
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
           />
-          <InputBox
-            id="job"
-            label="Job"
-            placeholder="enter your job"
-            register={register('job', {
-              required: 'This is required',
-            })}
-          />
           <FormInputFamily
             familyFields={familyFields}
             dataSource={fieldsFamily}
@@ -106,6 +98,14 @@ const FormInput = () => {
         </div>
         <div className="flex flex-col flex-1 max-w-xl gap-2">
           <InputBox
+            id="job"
+            label="Job"
+            placeholder="Enter your job"
+            register={register('job', {
+              required: 'This is required',
+            })}
+          />
+          <InputBox
             placeholder="Select Date and Time"
             id="dateOfBirth"
             label="Date Of Birth"
@@ -114,7 +114,7 @@ const FormInput = () => {
               minLength: { value: 14, message: 'Minimum length should be 14' },
             })}
             size="md"
-            type="datetime-local"
+            type="date"
           />
           <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
           {fieldsPhoneNumber.map((field, index) => (

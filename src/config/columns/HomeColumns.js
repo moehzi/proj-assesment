@@ -1,13 +1,17 @@
 import { ListItem, OrderedList, Text, UnorderedList } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import PopupDetails from '../../components/PopupDetails';
+import moment from 'moment';
 
 export const homeColumns = [
   { label: 'Name', render: (data) => data.name },
   { label: 'eKTP', render: (data) => data.eKTP },
   { label: 'Address', render: (data) => data.address },
   { label: 'Job', render: (data) => data.job },
-  { label: 'Date of Birth', render: (data) => data.dateOfBirth },
+  {
+    label: 'Date of Birth',
+    render: (data) => moment(data.dateOfBirth).format('DD MMMM YYYY'),
+  },
   {
     label: 'Phone Number',
     render: (data) => (

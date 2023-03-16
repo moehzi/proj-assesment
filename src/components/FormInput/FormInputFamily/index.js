@@ -1,15 +1,4 @@
-import {
-  Heading,
-  Input,
-  Select,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Heading, Input, Select } from '@chakra-ui/react';
 import React from 'react';
 import { optionsRelationship } from '../../../config/options/RelationshipOptions';
 import TableData from '../../TableData';
@@ -41,7 +30,7 @@ const FormInputFamily = ({ familyFields, register, dataSource }) => {
         <Input
           placeholder="Select Date and Time"
           size="sm"
-          type="datetime-local"
+          type="date"
           {...register(`family.${index}.dateOfBirth`, {
             required: 'This is required',
             minLength: {
@@ -58,7 +47,6 @@ const FormInputFamily = ({ familyFields, register, dataSource }) => {
         <Select
           colorScheme="red"
           size="sm"
-          onClick={() => console.log(index, 'mawar')}
           {...register(`family.${index}.relationshipStatus`, {
             required: 'This is required',
             minLength: {
@@ -66,6 +54,7 @@ const FormInputFamily = ({ familyFields, register, dataSource }) => {
               message: 'Minimum length should be 4',
             },
           })}
+          placeholder="Enter your relationship"
         >
           {optionsRelationship.map((option, index) => (
             <option key={index}>{option.label}</option>
